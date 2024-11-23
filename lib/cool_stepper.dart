@@ -1,14 +1,13 @@
 library cool_stepper;
 
-export 'package:cool_stepper/src/models/cool_step.dart';
-export 'package:cool_stepper/src/models/cool_stepper_config.dart';
-
 import 'package:another_flushbar/flushbar.dart';
-
 import 'package:cool_stepper/src/models/cool_step.dart';
 import 'package:cool_stepper/src/models/cool_stepper_config.dart';
 import 'package:cool_stepper/src/widgets/cool_stepper_view.dart';
 import 'package:flutter/material.dart';
+
+export 'package:cool_stepper/src/models/cool_step.dart';
+export 'package:cool_stepper/src/models/cool_stepper_config.dart';
 
 /// CoolStepper
 class CoolStepper extends StatefulWidget {
@@ -191,32 +190,33 @@ class _CoolStepperState extends State<CoolStepper> {
         TextButton(
           onPressed: onStepNext,
           child: Text(
-              getNextLabel(),
-              style: widget.config.nextButtonTextStyle ??
-                  TextStyle(
-                    color: Colors.green,
-              ),
-            ),
+            getNextLabel(),
+            style: widget.config.nextButtonTextStyle ??
+                TextStyle(
+                  color: Colors.green,
+                ),
+          ),
           onPressed: widget.config.isNextButtonLoading ? null : onStepNext,
           child: widget.config.isNextButtonLoading
-                ? const SizedBox(
-                    height: 30,
-                    width: 30,
-                    child: Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                        ),
+              ? const SizedBox(
+                  height: 30,
+                  width: 30,
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
                       ),
                     ),
-                  )
-                : Text(
-            getNextLabel(),
-            style: const TextStyle(
-              color: Colors.green,
-            ),
-          ),
+                  ),
+                )
+              : Text(
+                  getNextLabel(),
+                  style: widget.config.nextButtonTextStyle ??
+                      TextStyle(
+                        color: Colors.green,
+                      ),
+                ),
         ),
       ],
     );
