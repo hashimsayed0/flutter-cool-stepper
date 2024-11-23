@@ -35,6 +35,9 @@ class CoolStepperConfig {
   /// This is the textStyle for the title text
   final TextStyle? titleTextStyle;
 
+  /// This is the textStyle for the subtitle text
+  final TextStyle? subtitleTextStyle;
+
   /// This is the textStyle for back button
   final TextStyle? backButtonTextStyle;
   
@@ -71,6 +74,7 @@ class CoolStepperConfig {
     this.iconColor,
     this.icon,
     this.titleTextStyle,
+    this.subtitleTextStyle,
     this.backButtonTextStyle,
     this.nextButtonTextStyle,
     this.backTextList,
