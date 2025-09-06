@@ -226,15 +226,19 @@ class _CoolStepperState extends State<CoolStepper> {
                   getPrevLabel(),
                   style: widget.config.backButtonTextStyle ??
                       Theme.of(context).textTheme.labelMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+                            fontWeight: FontWeight.w600,
+                            color:
+                                Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-                  foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
+                  backgroundColor:
+                      Theme.of(context).colorScheme.surfaceContainerHighest,
+                  foregroundColor:
+                      Theme.of(context).colorScheme.onSurfaceVariant,
                   elevation: 0,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -254,6 +258,9 @@ class _CoolStepperState extends State<CoolStepper> {
                   : Icon(
                       _isLast(currentStep) ? Icons.check : Icons.arrow_forward,
                       size: 18,
+                      color: _isLast(currentStep)
+                          ? Theme.of(context).colorScheme.onPrimary
+                          : Theme.of(context).colorScheme.onPrimaryContainer,
                     ),
               label: widget.config.isNextButtonLoading
                   ? SizedBox(
@@ -273,7 +280,11 @@ class _CoolStepperState extends State<CoolStepper> {
                       style: widget.config.nextButtonTextStyle ??
                           Theme.of(context).textTheme.labelMedium?.copyWith(
                                 fontWeight: FontWeight.w600,
-                                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                                color: _isLast(currentStep)
+                                    ? Theme.of(context).colorScheme.onPrimary
+                                    : Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer,
                               ),
                     ),
               style: ElevatedButton.styleFrom(
@@ -286,10 +297,10 @@ class _CoolStepperState extends State<CoolStepper> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 backgroundColor: _isLast(currentStep)
-                    ? Theme.of(context).colorScheme.tertiary
+                    ? Theme.of(context).colorScheme.primary
                     : Theme.of(context).colorScheme.primaryContainer,
                 foregroundColor: _isLast(currentStep)
-                    ? Theme.of(context).colorScheme.onTertiary
+                    ? Theme.of(context).colorScheme.primary
                     : Theme.of(context).colorScheme.onPrimaryContainer,
               ),
             ),
