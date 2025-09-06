@@ -140,10 +140,43 @@ class _CoolStepperState extends State<CoolStepper> {
       ),
     );
 
-    final counter = Text(
-      "${widget.config.stepText ?? 'STEP'} ${currentStep + 1} ${widget.config.ofText ?? 'OF'} ${widget.steps.length}",
-      style: const TextStyle(
-        fontWeight: FontWeight.bold,
+    final counter = Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 20,
+            height: 20,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary,
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: Text(
+                '${currentStep + 1}',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 6),
+          Text(
+            "/  ${widget.steps.length}",
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: Theme.of(context).colorScheme.onPrimaryContainer,
+              fontSize: 13,
+            ),
+          ),
+        ],
       ),
     );
 
@@ -175,42 +208,94 @@ class _CoolStepperState extends State<CoolStepper> {
       return backLabel;
     }
 
-    final buttons = Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        TextButton(
-          onPressed: onStepBack,
-          child: Text(
-            getPrevLabel(),
-            style: widget.config.backButtonTextStyle ??
-                TextStyle(color: Colors.grey),
-          ),
-        ),
-        counter,
-        TextButton(
-          onPressed: widget.config.isNextButtonLoading ? null : onStepNext,
-          child: widget.config.isNextButtonLoading
-              ? const SizedBox(
-                  height: 30,
-                  width: 30,
-                  child: Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                      ),
-                    ),
-                  ),
-                )
-              : Text(
-                  getNextLabel(),
-                  style: widget.config.nextButtonTextStyle ??
-                      TextStyle(
-                        color: Colors.green,
+    final buttons = Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Flexible(
+            child: Visibility(
+              visible: !_isFirst(currentStep),
+              maintainSize: false,
+              maintainAnimation: true,
+              maintainState: true,
+              child: ElevatedButton.icon(
+                onPressed: onStepBack,
+                icon: Icon(Icons.arrow_back, size: 18),
+                label: Text(
+                  getPrevLabel(),
+                  style: widget.config.backButtonTextStyle ??
+                      Theme.of(context).textTheme.labelMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                 ),
-        ),
-      ],
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                  foregroundColor: Theme.of(context).colorScheme.onSurfaceVariant,
+                  elevation: 0,
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: counter,
+          ),
+          Flexible(
+            child: ElevatedButton.icon(
+              onPressed: widget.config.isNextButtonLoading ? null : onStepNext,
+              icon: widget.config.isNextButtonLoading
+                  ? const SizedBox.shrink()
+                  : Icon(
+                      _isLast(currentStep) ? Icons.check : Icons.arrow_forward,
+                      size: 18,
+                    ),
+              label: widget.config.isNextButtonLoading
+                  ? SizedBox(
+                      height: 18,
+                      width: 18,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          _isLast(currentStep)
+                              ? Theme.of(context).colorScheme.onTertiary
+                              : Theme.of(context).colorScheme.onPrimary,
+                        ),
+                      ),
+                    )
+                  : Text(
+                      getNextLabel(),
+                      style: widget.config.nextButtonTextStyle ??
+                          Theme.of(context).textTheme.labelMedium?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: Theme.of(context).colorScheme.onPrimaryContainer,
+                              ),
+                    ),
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                padding: EdgeInsets.symmetric(
+                  horizontal: widget.config.isNextButtonLoading ? 20 : 16,
+                  vertical: 10,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                backgroundColor: _isLast(currentStep)
+                    ? Theme.of(context).colorScheme.tertiary
+                    : Theme.of(context).colorScheme.primaryContainer,
+                foregroundColor: _isLast(currentStep)
+                    ? Theme.of(context).colorScheme.onTertiary
+                    : Theme.of(context).colorScheme.onPrimaryContainer,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
 
     return Column(
