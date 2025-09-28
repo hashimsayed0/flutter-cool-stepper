@@ -40,7 +40,7 @@ class CoolStepperConfig {
 
   /// This is the textStyle for back button
   final TextStyle? backButtonTextStyle;
-  
+
   /// This is the textStyle for next button
   final TextStyle? nextButtonTextStyle;
 
@@ -65,6 +65,11 @@ class CoolStepperConfig {
   /// and show a circular progress indicator in the button
   final bool isNextButtonLoading;
 
+  /// The initial step to display when the stepper is first shown
+  ///
+  /// default is 0
+  final int initialStep;
+
   const CoolStepperConfig({
     this.backText = 'PRE',
     this.nextText = 'NEXT',
@@ -82,5 +87,6 @@ class CoolStepperConfig {
     this.finalText = 'FINISH',
     this.isHeaderEnabled = true,
     this.isNextButtonLoading = false,
+    this.initialStep = 0,
   });
 }

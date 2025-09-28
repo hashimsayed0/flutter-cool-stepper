@@ -49,6 +49,13 @@ class _CoolStepperState extends State<CoolStepper> {
   int currentStep = 0;
 
   @override
+  void initState() {
+    super.initState();
+    currentStep = widget.config.initialStep;
+    _controller = PageController(initialPage: widget.config.initialStep);
+  }
+
+  @override
   void dispose() {
     _controller!.dispose();
     _controller = null;
